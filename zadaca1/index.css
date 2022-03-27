@@ -103,6 +103,36 @@ ul.topnav li a:hover {
 	list-style: none;
 }
 
+.search{
+	border: none;
+	background-color: transparent;
+	border-bottom: 1px solid black;
+	outline: none;
+	margin-left: 5px;
+
+}
+.header form{
+	font-weight: bold;
+	margin-bottom: 20px;
+}
+
+#txtHint{
+	display: flex;
+	justify-content: center;
+}
+
+#txtHint table{
+	border-collapse: collapse;
+	width: 30%;
+}
+td, th {
+	border: 1px solid rgb(85, 85, 85);
+	padding: 5px;
+}
+tr:nth-child(even) {
+	background-color: rgb(144, 182, 238);
+}
+
 @media screen and (max-width: 600px) {
 	.topnav li.right, 
 	.topnav li {

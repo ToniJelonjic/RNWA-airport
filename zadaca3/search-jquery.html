@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Airport</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="../zadaca1/index.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+</head>
+
+<script>
+
+    $(document).ready(function () {
+        $.get("load.php", function (data) {
+            $("#txtHint").html(data);
+        })
+    })
+
+    $(document).ready(function () {
+        $(".search").keyup(function showHint() {
+            var str = $(".search").val()
+            $.get("trazilica.php?s=" + str, function (data) {
+                $("#txtHint").html(data);
+            })
+        })
+    })
+
+</script>
+
+<body>
+    <div class="container">
+        <header class="nav">
+            <ul class="topnav">
+                <li><a href="#home">Airport</a></li>
+                <li><a href="#flight">Flight</a></li>
+                <li><a href="/rnwa/zadaca2/search.html">Pretraga djelatnika</a></li>
+                <li><a href="/rnwa/zadaca3/search-jquery.html">Pretraga djelatnika 2</a></li>
+                <li><a href="#airline">Airline</a></li>
+            </ul>
+            <h1>Airport</h1>
+        </header>
+
+        <section class="header">
+            <form>
+                Search: <input type="text" class="search">
+            </form>
+            <div id="txtHint"></div>
+        </section>
+    </div>
+</body>
+
+</html>

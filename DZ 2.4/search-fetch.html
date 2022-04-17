@@ -6,37 +6,37 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" href="../DZ 1/index.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
 
 <script>
-
-    $(document).ready(function () {
-        $.get("load.php", function (data) {
-            $("#txtHint").html(data);
-        })
-    })
-
-    $(document).ready(function () {
-        $(".search").keyup(function showHint() {
-            var str = $(".search").val()
-            $.get("trazilica.php?s=" + str, function (data) {
-                $("#txtHint").html(data);
+    function loadData() {
+        fetch('load.php')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById("txtHint").innerHTML = data;
             })
-        })
-    })
+            .catch(error => console.error(error));
+    }
 
+    function showHint(str) {
+        fetch("trazilica.php?s=" + str)
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById("txtHint").innerHTML = data;
+            })
+            .catch(error => console.error(error));
+    }
 </script>
 
-<body>
+<body onload="loadData()">
     <div class="container">
         <header class="nav">
             <ul class="topnav">
                 <li><a href="#home">Airport</a></li>
                 <li><a href="#flight">Flight</a></li>
                 <li><a href="/rnwa/DZ 2.1/search.html">Pretraga djelatnika</a></li>
-				<li><a href="/rnwa/DZ 2.2/search-jquery.html">Pretraga djelatnika jquery</a></li>
-				<li><a href="/rnwa/DZ 2.3/search-axios.html">Pretraga djelatnika axios</a></li>
+                <li><a href="/rnwa/DZ 2.2/search-jquery.html">Pretraga djelatnika jquery</a></li>
+                <li><a href="/rnwa/DZ 2.3/search-axios.html">Pretraga djelatnika axios</a></li>
                 <li><a href="/rnwa/DZ 2.4/search-fetch.html">Pretraga djelatnika fetch</a></li>
                 <li><a href="#airline">Airline</a></li>
             </ul>
@@ -45,7 +45,7 @@
 
         <section class="header">
             <form>
-                Search: <input type="text" class="search">
+                Search: <input type="text" class="search" onkeyup="showHint(this.value)">
             </form>
             <div id="txtHint"></div>
         </section>

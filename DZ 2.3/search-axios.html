@@ -6,34 +6,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" href="../DZ 1/index.css">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 </head>
 
 <script>
-    function loadData() {
-        var xmlhttp = new XMLHttpRequest();
-        xmlhttp.onreadystatechange = function () {
-            if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-                document.getElementById("txtHint").innerHTML = xmlhttp.responseText;
-            }
-        }
-        xmlhttp.open("GET", "load.php", true);
-        xmlhttp.send();
 
+    function loadData() {
+        axios.get("load.php")
+            .then(response => {
+                document.getElementById("txtHint").innerHTML = response.data;
+            })
+            .catch(error => console.error(error));
     }
+
+
     function showHint(str) {
-        if (str.length == 0) {
-            document.getElementById("txtHint").innerHTML = "";
-            return;
-        } else {
-            var xmlhttp = new XMLHttpRequest();
-            xmlhttp.onreadystatechange = function () {
-                if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-                    document.getElementById("txtHint").innerHTML = xmlhttp.responseText;
-                }
-            }
-            xmlhttp.open("GET", "trazilica.php?s=" + str, true);
-            xmlhttp.send();
-        }
+        axios.get("trazilica.php?s=" + str)
+            .then(response => {
+                document.getElementById("txtHint").innerHTML = response.data;
+            })
+            .catch(error => console.error(error));
     }
 </script>
 

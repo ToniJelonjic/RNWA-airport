@@ -103,6 +103,10 @@ ul.topnav li a:hover {
 	list-style: none;
 }
 
+.inputDiv {
+	padding: 10px 5px;
+}
+
 .search{
 	border: none;
 	background-color: transparent;

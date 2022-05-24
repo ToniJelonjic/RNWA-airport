@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Airport</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="../../DZ 1/index.css">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+
+<script>
+    const api = "http://localhost:11690/api/Employees"
+
+    const generateTable = (data) => {
+        const table = document.getElementById("tbl")
+        table.innerHTML = "";
+        console.log(data)
+        data.map((rowdata) => {
+            console.log(rowdata)
+            table.insertRow()
+            const firstNameCell = table.rows[table.rows.length - 1].insertCell();
+            firstNameCell.innerHTML = rowdata.firstname;
+            const lastNameCell = table.rows[table.rows.length - 1].insertCell();
+            lastNameCell.innerHTML = rowdata.lastname;
+            const actionsCell = table.rows[table.rows.length - 1].insertCell();
+            actionsCell.innerHTML = `<td>
+                                        <a href='./details.html?id=${rowdata.employeeId}'>DETAILS</a>
+                                        <a href='./edit.html?id=${rowdata.employeeId}'>UPDATE</a>
+                                        <a href="" onclick='deleteRow(${rowdata.employeeId})'>DELETE</a>
+                                    </td>`;
+        })
+    }
+    
+    const loadData = () => {
+        console.log(window.location)
+        axios.get(`${api}`)
+            .then(response => {
+                generateTable(response.data)
+            })
+            .catch(error => console.error(error));
+    }
+
+    const showHint = (str) => {
+        str === "" 
+        ?
+            loadData()
+        : 
+            axios.get(`${api}/search/${str}`)
+            .then(response => {
+                generateTable(response.data);
+            })
+            .catch(error => console.error(error));
+    }
+
+    const deleteRow = (id) => {
+        axios.delete(`${api}/${id}`)
+            .catch(error => console.error(error));
+    }
+</script>
+
+<body onload="loadData()">
+    <div class="container">
+        <header class="nav">
+            <ul class="topnav">
+				<li><a href="/rnwa/DZ 3.3/employee/rest.html">Employees</a></li>
+                <li><a href="/rnwa/DZ 3.3/airplane-types/rest.html">Airplane types</a></li>
+            </ul>
+            <h1>Airport</h1>
+        </header>
+
+        <section class="header">
+            <form>
+                Search: <input type="text" class="search" onkeyup="showHint(this.value)">
+            </form>
+            <div id="txtHint">
+                <table border='1'>
+                    <tr>
+                        <th>First name</th>
+                        <th>Last name</th>
+                        <th>Actions</th>
+                    </tr>
+                    <tbody id="tbl"></tbody>
+                </table>
+            </div>
+        </section>
+    </div>
+</body>
+
+</html>

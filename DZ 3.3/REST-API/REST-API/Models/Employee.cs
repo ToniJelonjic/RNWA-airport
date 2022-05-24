@@ -1,5 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Newtonsoft.Json;
+using REST_API.Helpers;
+using System;
 
 #nullable disable
 
@@ -10,6 +11,7 @@ namespace REST_API.Models
         public int EmployeeId { get; set; }
         public string Firstname { get; set; }
         public string Lastname { get; set; }
+        [JsonConverter(typeof(IsoDateConverter))]
         public DateTime Birthdate { get; set; }
         public string Sex { get; set; }
         public string Street { get; set; }

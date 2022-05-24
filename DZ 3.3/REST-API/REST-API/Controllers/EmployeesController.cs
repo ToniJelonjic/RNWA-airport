@@ -1,12 +1,9 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using REST_API.Models;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using REST_API;
-using REST_API.Models;
 
 namespace REST_API.Controllers
 {
@@ -40,6 +37,23 @@ namespace REST_API.Controllers
             }
 
             return employee;
+        }
+
+        // GET: api/Employees/search/string
+        [HttpGet("search/{term}")]
+        public async Task<ActionResult<IEnumerable<Employee>>> SearchEmployee(string term)
+        {
+            var employees = await _context.Employees.Where(x => 
+                x.Firstname.ToLower().Contains(term.ToLower()) ||
+                x.Lastname.ToLower().Contains(term.ToLower())).
+                ToListAsync();
+
+            if (employees == null)
+            {
+                return NotFound();
+            }
+
+            return employees;
         }
 
         // PUT: api/Employees/5

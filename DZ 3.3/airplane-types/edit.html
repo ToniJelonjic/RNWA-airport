@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Airport</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="../../DZ 1/index.css">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+
+<script>
+    const api = "http://localhost:11690/api/AirplaneTypes"
+    const id = (new URL(document.location)).searchParams.get("id");
+    let formdata
+
+    const submitData = (event) => {
+        event.preventDefault()
+        console.log(formdata)
+        const submitData = {}
+        formdata.map((key) => submitData[key] = document.getElementById(key)?.value)
+        submitData.typeId = id
+        axios.put(`${api}/${id}`, submitData)
+            .then(response => {
+                window.location.href = './rest.html'
+            })
+            .catch(error => console.error(error));
+    }
+    
+    const loadData = () => {
+        axios.get(`${api}/${id}`)
+            .then(response => {
+                formdata = Object.keys(response.data)
+                Object.keys(response.data).map((key) => {
+                    const el = document.getElementById(key)
+                    if (el) el.value = response.data[key]
+                })
+            })
+            .catch(error => console.error(error));
+    }
+</script>
+
+<body onload="loadData()">
+    <div class="container">
+        <header class="nav">
+            <ul class="topnav">
+                <li><a href="/rnwa/DZ 3.3/employee/rest.html">Employees</a></li>
+                <li><a href="/rnwa/DZ 3.3/airplane-types/rest.html">Airplane types</a></li>
+            </ul>
+            <h1>Airport</h1>
+        </header>
+
+        <section class="header">
+            <form onsubmit="submitData(event)">
+                <div class="inputDiv">
+                    <label>Description</label>
+                    <input type="text" class="search" name="description" id="description">
+                </div>
+                <div class="inputDiv">
+                    <label>Identifier</label>
+                    <input type="text" class="search" name="identifier" id="identifier">
+                </div>
+                <button type="submit">Submit</button>
+            </form>
+        </section>
+    </div>
+</body>
+
+</html>

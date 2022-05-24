@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Airport</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="../../DZ 1/index.css">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+
+<script>
+    const api = "http://localhost:11690/api/Employees"
+    const id = (new URL(document.location)).searchParams.get("id");
+    let formdata
+
+    const submitData = (event) => {
+        event.preventDefault()
+        console.log(formdata)
+        const submitData = {}
+        formdata.map((key) => submitData[key] = document.getElementById(key)?.value)
+        submitData.employeeId = id
+        axios.put(`${api}/Employees/${id}`, submitData)
+            .then(response => {
+                window.location.href = './rest.html'
+            })
+            .catch(error => console.error(error));
+    }
+    
+    const loadData = () => {
+        axios.get(`${api}/${id}`)
+            .then(response => {
+                formdata = Object.keys(response.data)
+                Object.keys(response.data).map((key) => {
+                    const el = document.getElementById(key)
+                    if (el)
+                        if (key === "birthdate") {
+                            const date = response.data[key].split("T")[0]
+                            console.log(date)
+                            el.value = date
+                        }
+                        else {
+                            el.value = response.data[key]
+                        }
+                })
+            })
+            .catch(error => console.error(error));
+    }
+</script>
+
+<body onload="loadData()">
+    <div class="container">
+        <header class="nav">
+            <ul class="topnav">
+                <li><a href="/rnwa/DZ 3.3/employee/rest.html">Employees</a></li>
+                <li><a href="/rnwa/DZ 3.3/airplane-types/rest.html">Airplane types</a></li>
+            </ul>
+            <h1>Airport</h1>
+        </header>
+
+        <section class="header">
+            <form onsubmit="submitData(event)">
+                <div class="inputDiv">
+                    <label>First name</label>
+                    <input type="text" class="search" name="firstname" id="firstname">
+                </div>
+                <div class="inputDiv">
+                    <label>Last name</label>
+                    <input type="text" class="search" name="lastname" id="lastname">
+                </div>
+                <div class="inputDiv">
+                    <label>Birth date</label>
+                    <input type="date" class="search" name="birthdate" id="birthdate" >
+                </div>
+                <div class="inputDiv">
+                    <label>Sex</label>
+                    <select name="sex" id="sex">
+                        <option value="M">M</option>
+                        <option value="F">F</option>
+                    </select>
+                </div>
+                <div class="inputDiv">
+                    <label>Street</label>
+                    <input type="text" class="search" name="street" id="street">
+                </div>
+                <div class="inputDiv">
+                    <label>City</label>
+                    <input type="text" class="search" name="city" id="city">
+                </div>
+                <div class="inputDiv">
+                    <label>Zip</label>
+                    <input type="text" class="search" name="zip" id="zip">
+                </div>
+                <div class="inputDiv">
+                    <label>Country</label>
+                    <input type="text" class="search" name="country" id="country">
+                </div>
+                <div class="inputDiv">
+                    <label>Email</label>
+                    <input type="text" class="search" name="emailaddress" id="emailaddress">
+                </div>
+                <div class="inputDiv">
+                    <label>Phone number</label>
+                    <input type="text" class="search" name="telephoneno" id="telephoneno">
+                </div>
+                <div class="inputDiv">
+                    <label>Salary</label>
+                    <input type="number" class="search" name="salary" id="salary">
+                </div>
+                <div class="inputDiv">
+                    <label>Department</label>
+                    <select name="department" id="department">
+                        <option value="Marketing">Marketing</option>
+                        <option value="Buchhaltung">Buchhaltung</option>
+                        <option value="Management">Management</option>
+                        <option value="Logistik">Logistik</option>
+                        <option value="Flugfeld">Flugfeld</option>
+                    </select>
+                </div>
+                <div class="inputDiv">
+                    <label>Username</label>
+                    <input type="text" class="search" name="username" id="username">
+                </div>
+                <div class="inputDiv">
+                    <label>Password</label>
+                    <input type="password" class="search" name="password" id="password">
+                </div>
+                <button type="submit">Submit</button>
+            </form>
+        </section>
+    </div>
+</body>
+
+</html>

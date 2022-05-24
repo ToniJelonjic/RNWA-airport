@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Airport</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="../../DZ 1/index.css">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+
+<script>
+    const api = "http://localhost:11690/api/AirplaneTypes"
+
+    const loadData = () => {
+        let params = (new URL(document.location)).searchParams;
+        let id = params.get("id");
+        console.log(name)
+
+        axios.get(`${api}/${id}`)
+            .then(response => {
+                console.log(response.data)
+                Object.keys(response.data).map((key) => {
+                    const el = document.getElementById(key)
+                    if (el) el.innerHTML = response.data[key]
+                })
+            })
+            .catch(error => console.error(error));
+    }
+</script>
+
+<body onload="loadData()">
+    <div class="container">
+        <header class="nav">
+            <ul class="topnav">
+                <li><a href="/rnwa/DZ 3.3/employee/rest.html">Employees</a></li>
+                <li><a href="/rnwa/DZ 3.3/airplane-types/rest.html">Airplane types</a></li>
+            </ul>
+            <h1>Airport</h1>
+        </header>
+
+        <section class="header">
+            <form onsubmit="(data) => console.log(data)">
+                <div class="inputDiv">
+                    <label>Description: </label>
+                    <span id="description"></span>
+                </div>
+                <div class="inputDiv">
+                    <label>Identifier: </label>
+                    <span id="identifier"></span>
+                </div>
+            </form>
+        </section>
+    </div>
+</body>
+
+</html>

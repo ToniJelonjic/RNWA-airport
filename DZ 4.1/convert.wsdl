@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<definitions name="CurrencyConverter" targetNamespace="urn:CurrencyConverter" xmlns:tns="urn:CurrencyConverter"  xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns="http://schemas.xmlsoap.org/wsdl/">
+  <types>
+    <xsd:schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:Converter">
+      <xsd:element name="num" type="xsd:integer" />
+      <xsd:element name="cur1" type="xsd:string" />
+      <xsd:element name="cur2" type="xsd:string" />
+	    <xsd:element name="response" type="xsd:decimal" />	 	  
+	</xsd:schema>			
+  </types>
+  
+  <message name="convert">
+    <part name="num" type="tns:num" />
+    <part name="cur1" type="tns:cur1" />
+    <part name="cur2" type="tns:cur2" />
+  </message>
+  
+  <message name="convertResponse">
+    <part name="return" type="tns:response" />
+  </message>  
+  
+  <portType name="convertPort">
+    <operation name="convert">
+	  <input message="tns:convert" />
+	  <output message="tns:convertResponse" />
+	</operation>
+  </portType>
+  
+  <binding name="convertBinding" type="tns:convertPort">
+    <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http" />
+	  <operation name="convert">
+	    <soap:operation soapAction="urn:ConvertAction" />
+		<input>
+		  <soap:body use="encoded" namespace="urn:Converter" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />		  
+		</input>
+		<output>
+		  <soap:body use="encoded" namespace="urn:Converter" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />		  
+		</output>
+	  </operation>
+  </binding>
+  
+  <service name="ConvertService">
+    <port name="convertPort" binding="tns:convertBinding">
+	  <soap:address location="http://localhost/dz4/server.php" />
+	</port>
+  </service>
+    
+</definitions>

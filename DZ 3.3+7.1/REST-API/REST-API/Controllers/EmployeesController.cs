@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using REST_API.Models;
 using System.Collections.Generic;
@@ -7,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace REST_API.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class EmployeesController : ControllerBase
@@ -43,7 +45,7 @@ namespace REST_API.Controllers
         [HttpGet("search/{term}")]
         public async Task<ActionResult<IEnumerable<Employee>>> SearchEmployee(string term)
         {
-            var employees = await _context.Employees.Where(x => 
+            var employees = await _context.Employees.Where(x =>
                 x.Firstname.ToLower().Contains(term.ToLower()) ||
                 x.Lastname.ToLower().Contains(term.ToLower())).
                 ToListAsync();

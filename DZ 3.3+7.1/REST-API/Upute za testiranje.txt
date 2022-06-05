@@ -1,0 +1,6 @@
+username: string
+password: string
+
+- testiranje se vrsi pomocu Swagger
+- kad se pokrene projekat, prikazat ce se swagger, u desnom kutu je button za autentikaciju
+- kada kliknete na button otvori se prozor u kojem trebate unijeti username i password koji su navedeni iznad

@@ -24,9 +24,9 @@
   }
 
   $controllers = array('pages' 		=> ['home', 'error'],
-            'airport_reachable' 		=> ['index', 'show', 'findById', 'deleteAirportReachableById', 'getAddAirportReachableView', 'addAirportReachable', 'getEditAirportReachableView', 'editAirportReachable'],
-					  'airline' => ['index', 'show', 'findById', 'deleteAirlineById', 'getAddAirlineView', 'addAirline', 'getEditAirlineView', 'editAirline'],
-					  'airport' 	=> ['index', 'show', 'findById', 'deleteAirportId', 'getAddAirportView', 'addAirport', 'getEditAirportView', 'editAirport']);
+            'airport_reachable' 		=> ['index', 'add', 'edit'],
+					  'airline' => ['index', 'add', 'edit'],
+					  'airport' 	=> ['index', 'add', 'edit']);
 
   if (array_key_exists($controller, $controllers)) {
     if (in_array($action, $controllers[$controller])) {

@@ -2,6 +2,8 @@
   class AirportController {
     public function index() {
       $Airports = Airport::getAllAirports();
+      $data['airports'] = $Airports;
+
       require_once('views/airport/index.php');
     }
 

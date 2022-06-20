@@ -2,6 +2,8 @@
   class AirportReachableController {
     public function index() {
       $airport_reachables = AirportReachable::getAllAirportReachables();
+      $data['airport_reachables'] = $airport_reachables;
+
       require_once('views/airport_reachable/index.php');
     }
 

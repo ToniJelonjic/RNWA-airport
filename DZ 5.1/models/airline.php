@@ -1,40 +1,15 @@
 <?php
     class Airline  {
-        private $AirlineId;
-        private $Iata;
-        private $Airlinename;
-        private $Base_Airport;
+        public $airline_id;
+        public $iata;
+        public $airlinename;
+        public $base_airport;
 
-        public function __construct($AirlineId = null, $Iata, $Airlinename, $Base_Airport) {
-            $this->Iata = $Iata;
-            $this->Airlinename = $Airlinename;
-            $this->Base_Airport = $Base_Airport;
-        }
-
-
-        public function getAirlineId() {
-            return $this->AirlineId;
-        }
-
-        public function getIata() {
-            return $this->Iata;
-        }
-        public function setIata($name) {
-            return $this->Iata = $name;
-        }
-        
-        public function getAirlinename() {
-            return $this->Airlinename;
-        }
-        public function setAirlinename($Airlinename) {
-            return $this->Airlinename = $Airlinename;
-        }
-
-        public function getBase_Airport() {
-            return $this->Base_Airport;
-        }
-        public function setBase_Airport($Base_Airport) {
-            return $this->Base_Airport = $Base_Airport;
+        public function __construct($airline_id = null, $iata, $airlinename, $base_airport) {
+            $this->airline_id = $airline_id;
+            $this->iata = $iata;
+            $this->airlinename = $airlinename;
+            $this->base_airport = $base_airport;
         }
 
         public static function getAllAirlines() {
@@ -42,7 +17,7 @@
             $db = Db::getInstance();
             $request = $db->query('SELECT * FROM airline');
                 foreach($request->fetchAll() as $cult) {
-                $list[] = new Airline($cult['AirlineId'], $cult['Iata'], $cult['Airlinename'], $cult['Base_Airport']);
+                $Airlines[] = new Airline($cult['airline_id'], $cult['iata'], $cult['airlinename'], $cult['base_airport']);
             }
 
             return $Airlines;
@@ -52,22 +27,22 @@
           public static function findById($id) {
             $db = Db::getInstance();
 
-            $request = $db->prepare('SELECT * FROM airline WHERE AirlineId = :id');
+            $request = $db->prepare('SELECT * FROM airline WHERE airline_id = :id');
             $request->execute(array('id' => $id));
             $Airline = $request->fetch();
             
             if ($Airline) {
-                return new Airline($Airline['AirlineId'], $Airline['Iata'], $Airline['Airlinename'], $Airline['Base_Airport']);
+                return new Airline($Airline['airline_id'], $Airline['iata'], $Airline['airlinename'], $Airline['base_airport']);
             } else {
                 return [];
             }
           }
 
 
-          public function editAirlineById($id, $newIata, $newAirlinename, $newBase_Airport){
+          public function editAirlineById($id, $newiata, $newairlinename, $newbase_airport){
             $db = Db::getInstance();
 
-            $sql = "UPDATE Airline SET 'Iata' = '$newIata', 'Airlinename' = '$newAirlinename', 'Base_airport' = '$newBase_Airport') VALUES WHERE AirlineId = '$id'";
+            $sql = "UPDATE Airline SET 'iata' = '$newiata', 'airlinename' = '$newairlinename', 'Base_airport' = '$newbase_airport') VALUES WHERE airline_id = '$id'";
 
             if ($db->query($sql) == TRUE){
                 $rez="Airline updated!";
@@ -79,10 +54,10 @@
           }
 
 
-          public function addAirline($AirlineId, $Iata, $Airlinename){
+          public static function addAirline($airline_id, $iata, $airlinename){
             $db = Db::getInstance();
 
-            $sql = "INSERT INTO airline (`AirlineId`, `Iata`, `Airlinename`, ') VALUES ('$AirlineId', '$Iata', '$Airlinename')";
+            $sql = "INSERT INTO airline (`airline_id`, `iata`, `airlinename`, ') VALUES ('$airline_id', '$iata', '$airlinename')";
 
             if ($db->query($sql) == TRUE){
                 $rez="Airline added!";
@@ -96,7 +71,7 @@
 
           public static function deleteAirlineById($id) {
             $db = Db::getInstance();
-            $sql = "DELETE FROM airline WHERE AirlineId = '$id'";
+            $sql = "DELETE FROM airline WHERE airline_id = '$id'";
 
             if ($db->query($sql) == TRUE){
                 $rez="Culture deleted";

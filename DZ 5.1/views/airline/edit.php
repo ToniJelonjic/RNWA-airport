@@ -4,39 +4,32 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="scripts\index.js"></script>
-    <title>Pregled airline</title>
+    <title>Uredi airline</title>
 </head>
 <body>
     
 <div class="header">
-    <h3>Pregled airline</h3>
+    <h3>Uredi airline</h3>
 </div>
 
 <div class="ss">
-  <form>
+  <form id="addDeptForm" method="POST" action="edit">
     <label for="dep">airlineName: </label>
-    <input type="text" id="airlineName" class="in" name="airlineName">
+    <input type="text" id="airlinename" class="in" name="airlinename">
 
     <label for="dep">Iata: </label>
     <input type="text" id="iata" class="in" name="iata">
 
     <label for="dep">Base airport: </label>
-    <input type="text" id="Base_Airport" class="in" name="Base_Airport">
+    <input type="text" id="base_airport" class="in" name="base_airport">
 
     <label for="grp">ID:</label>
     <input type="text" id="airlineId" class="in" name="airlineId">
-
-        <button class="da">Edit</button>
-        <button class="ne" onclick="deleteAirline()">Izbriši</button>
-        <a href="../../index.php"></a><button class="ne">Natrag</button>
+    
+        <button type="button" class="da" onclick="">Spremi</button>
+        <a href="?controller=airline&action=index"><button type="button" class="ne">Nazad</button></a>
   </form>
 </div>
-
-<footer class="footer">
-    <p>Primjer</p>
-  </footer>
-
 
 </body>
 </html>
